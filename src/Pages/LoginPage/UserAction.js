@@ -55,5 +55,6 @@ export const deleteUser = (userId) => async (dispatch, getState) => {
         dispatch({ type: 'DELETE_USER', payload: data })
     } catch (error) {
         dispatch({ type: 'DELETE_USER_FAIL', error: error.message })
+
     }
 }
