@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import HomePage from './Pages/HomePage/HomePage';
 import ProductPage from './Pages/ProductPage/ProductPage';
 import NewsPage from './Pages/NewsPage/NewsPage';
@@ -20,18 +20,20 @@ const App = () => {
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage/>} /> 
-          <Route path="/products" element={<ProductPage/>}/>
-          <Route path="/products/:id" element={<ProductDetail/>}/>
-          <Route path="/news" element={<NewsPage/>}/>
-          <Route path="/login" element={<LoginPage/>}/>
-          <Route path="/signup" element={<SignupPage/>}/>
-          <Route path="/purchase-history" element={<HstoryPage/>}/>
-          <Route path="/cart" element={<CartPage/>}/>
-          <Route path="/screen" element={<ScreenPage/>}/>
-           <Route path="/admin" element={<Admin/>}/>
-           <Route path="/admin/products" element={<Products/>}/>
-           <Route path="/admin/users" element={<UserManagement/>}/>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/purchase-history" element={<HstoryPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/screen" element={<ScreenPage />} />
+
+          <Route path="/admin" element={localStorage.getItem('userRole') == 0 ? < Admin /> : < Navigate to='/' />} />
+
+          <Route path="/admin/products" element={localStorage.getItem('userRole') == 0 ? < Products /> : < Navigate to='/' />} />
+          <Route path="/admin/users" element={localStorage.getItem('userRole') == 0 ? < UserManagement /> : < Navigate to='/' />} />
 
         </Routes>
       </Router>
