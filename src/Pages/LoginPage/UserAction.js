@@ -7,6 +7,9 @@ export const login = (username, password, JWT_KEY) => async (dispatch) => {
         const role = response.data.userDelPass;
         dispatch({ type: 'USER_LOGIN_SUCCESS', payload: data });
         console.log(role);
+        const userId = role[0]._id;
+        localStorage.setItem('userid', userId);
+
         const firstObject = role[0].role;
         localStorage.setItem('userRole', firstObject);
         localStorage.setItem('userInfo', JSON.stringify(data));
@@ -31,9 +34,18 @@ export const SignoutUser = (user) => async (dispatch) => {
     document.location.href = '/';
 };
 if (SignoutUser) {
-    localStorage.setItem('userRole', '3');
+    localStorage.removeItem('userInfo');
 }
-
+export const getproductById = (id) => async (dispatch) => {
+    try {
+        const { data } = await axios.get(
+            `http://localhost:4000/products/detail/${id}`
+        );
+        dispatch({ type: "GET_PRODUCT_BY_ID", payload: data });
+    } catch (error) {
+        dispatch({ type: "GET_PRODUCT_BY_ID_FAIL", payload: error.message });
+    }
+};
 export const getAllUser = () => async (dispatch, getState) => {
     const {
         userSignin: { userInfo },
@@ -47,6 +59,7 @@ export const getAllUser = () => async (dispatch, getState) => {
 }
 
 export const deleteUser = (userId) => async (dispatch, getState) => {
+
     const {
         userSignin: { userInfo },
     } = getState()

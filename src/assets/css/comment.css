@@ -1,0 +1,165 @@
+.comment-container{
+    display: flex;
+}
+
+
+#clicked {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    width: 100%;
+    background-color: #ecb21f;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 13px;
+}
+
+#profile {
+    background-color: unset;
+
+}
+
+#post {
+    margin: 10px;
+    padding: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-align: center;
+    background-color: #ecb21f;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 13px;
+    width: 50%;
+}
+
+
+#nav-items li a,
+
+
+
+.comment{
+    text-align: center;
+    padding: 15px;
+    padding-right: 50px;
+}
+.comment {
+    border: 1px solid rgb(247, 249, 249);
+    background-color: rgba(254, 255, 255, 0.973);
+   
+    border-radius: 5px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 10px;
+
+}
+.comment h3 {
+    color: black;
+    padding: 15px;
+}
+ .h4,
+ .span,
+
+.darker span {
+    display: inline;
+    text-align: center;
+}
+
+.comment p {
+    color: rgb(26, 173, 199);
+    font-size: 16px;
+    font-weight: bold;
+}
+.comment span,
+
+.darker span {
+    color: rgb(103, 78, 78);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+h1,
+h4 {
+    color: rgb(7, 7, 7);
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+}
+
+label {
+    color: rgb(103, 78, 78);
+}
+
+#align-form {
+    margin-top: 20px;
+}
+
+.form-group p a {
+    color: rgb(103, 78, 78);
+}
+
+#checkbx {
+    background-color: rgb(0, 0, 0);
+}
+
+
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    background-color: black;
+    border: 1px solid rgba(16, 46, 46, 1);
+    border-radius: 12px;
+}
+
+form {
+    border: 1px solid rgba(16, 46, 46, 1);
+    background-color: rgba(16, 46, 46, 0.973);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.form-check-input {
+    margin-top: 6px;
+    margin-left: -24px !important;
+    cursor: pointer;
+}
+h3 {
+    
+}
+
+.form-check-input:focus {
+    box-shadow: none;
+}
+
+
+.icons i {
+
+    margin-left: 8px;
+}
+
+.reply {
+
+    margin-left: 12px;
+}
+
+.reply small {
+
+    color: #b7b4b4;
+
+}
+
+
+.reply small:hover {
+
+    color: green;
+    cursor: pointer;
+
+}
+label { 
+    color: #ede3e3;
+    font-weight: bold;
+    font-size: 16px;
+}

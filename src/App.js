@@ -12,9 +12,8 @@ import ScreenPage from './Pages/ScreenPage/ScreenPage';
 import Admin from './Pages/Admin/dashboard';
 import Products from './Pages/Admin/products';
 import UserManagement from './Pages/Admin/users';
-import ProductDetail from './Pages/HomePage/ProductDetail';
-
-
+import ProductDetail from './Pages/ProductPage/ProductDetail';
+import CommentSection from './Pages/ProductPage/Comment';
 const App = () => {
   return (
     <div>
@@ -29,7 +28,7 @@ const App = () => {
           <Route path="/purchase-history" element={<HstoryPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/screen" element={<ScreenPage />} />
-
+          <Route path="/CommentSection" element={<CommentSection />} />
           <Route path="/admin" element={localStorage.getItem('userRole') == 0 ? < Admin /> : < Navigate to='/' />} />
 
           <Route path="/admin/products" element={localStorage.getItem('userRole') == 0 ? < Products /> : < Navigate to='/' />} />

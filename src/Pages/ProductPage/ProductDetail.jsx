@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
 import { SketchPicker } from "react-color";
@@ -10,44 +10,66 @@ import { BiSolidErrorCircle } from "react-icons/bi";
 import { BsRocketTakeoffFill } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { BsFillTelephoneInboundFill } from "react-icons/bs";
+import axios from "axios";
+import { useParams } from 'react-router-dom';
+import CommentSection from "./Comment";
+import { Link } from "react-router-dom";
 const ProductDetail = () => {
+  const [productDetail, setProductDetail] = useState(null);
+  const [productDetailbt, setProductDetailbt] = useState(null);
+  const path = window.location.pathname;
+  const pathParts = path.split('/');
+  const productId = pathParts[pathParts.length - 1];
+  const [loading, setLoading] = useState(true);
+  
+  // useEffect((productId) => {
+  //  CommentSection();
+  // });
+  useEffect(() => {
+    const ProductDetail = async () => {
+      try {
+        const response = await axios.get(`https://du-an-tot-nghiep-be-1.vercel.app/products/${productId}`);
+        const productData = response.data;
+      console.log(productData);
+        // const productbt = productData[0].optionsDetails[0];
+        // localStorage.setItem('productbt', productbt);
+        const productDatabt = productData[0].optionsDetails;
+        setProductDetailbt(productDatabt)
+        setProductDetail(productData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch product detail:', error);
+        setLoading(false); 
+      }
+    };
+    ProductDetail();
+  }, []); 
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const onChange = (current) => {
-    // console.log("Current: ",current);
     setCurrentSlide(current);
   };
 
   const handleThumbnailClick = (index) => {
-    // console.log(index);
     setCurrentSlide(index);
   };
-  const [selectedColor, setSelectedColor] = useState("#ff0000"); 
+  const [selectedColor, setSelectedColor] = useState("#ff0000");
 
   const handleColorChange = (event) => {
     setSelectedColor(event.target.value);
   };
-
-  const images = [
-    "https://cdn.tgdd.vn/Files/2022/06/22/1441650/hinh-nen-dong-macbook.jpg",
-    "https://image.anhducdigital.vn/apple/macbook/macbook-pro/macbook-pro-2022/macbook-pro-2022-08.jpg",
-    "https://cdn.tgdd.vn/Files/2022/06/22/1441650/hinh-nen-dong-macbook.jpg",
-    "https://cdn.tgdd.vn/Files/2022/06/22/1441650/hinh-nen-dong-macbook.jpg",
-    "https://cdn.tgdd.vn/Files/2023/08/02/1540742/1-020823-124636.jpg",
-  ];
-
+  console.log(productDetailbt);
   return (
-    <div>
+     <div>
       <Header />
-
       <div className="containerDetail">
         <div className="left-section">
           <section>
             <Carousel afterChange={onChange} initialSlide={currentSlide}>
-              {images.map((image, index) => (
+              {productDetail?.map((product, index) => (
                 <div key={index}>
                   <img
-                    src={image}
+                    src={product.thumbnail}
                     alt={`Image ${index + 1}`}
                     style={{ width: "100%", borderRadius: "10px" }}
                   />
@@ -61,14 +83,14 @@ const ProductDetail = () => {
                 marginTop: "20px",
               }}
             >
-              {images.map((image, index) => (
+              {productDetail?.map((product, index) => (
                 <div
                   key={index}
                   onClick={() => handleThumbnailClick(index)}
                   style={{ marginRight: "10px", cursor: "pointer" }}
                 >
                   <img
-                    src={image}
+                    src={product.thumbnail}
                     alt={`Thumbnail ${index + 1}`}
                     style={{
                       width: "90px",
@@ -84,7 +106,7 @@ const ProductDetail = () => {
               ))}
             </div>
           </section>
-          <p style={{ marginTop: "8px", fontSize: "13px", marginLeft: "55px",marginBottom:"20px" }}>
+          <p style={{ marginTop: "8px", fontSize: "13px", marginLeft: "55px", marginBottom: "20px" }}>
             MacOne là đại lý bán lẻ ủy quyền các nhà phân phối chính hãng Apple
             Việt Nam
           </p>
@@ -94,7 +116,7 @@ const ProductDetail = () => {
               borderRadius: "10px",
               padding: "10px",
               textAlign: "center",
-              marginBottom:"20px"
+              marginBottom: "20px"
             }}
           >
             <p style={{ fontSize: "13px" }}>
@@ -104,7 +126,7 @@ const ProductDetail = () => {
           </section>
           {/*  */}
           <section>
-            <h6 style={{fontWeight:"bold", marginBottom:"20px"}}>Phụ kiện liên quan</h6>
+            <h6 style={{ fontWeight: "bold", marginBottom: "20px" }}>Phụ kiện liên quan</h6>
             <section
               class="containerPK"
               style={{ display: "flex", gap: "150px" }}
@@ -130,14 +152,23 @@ const ProductDetail = () => {
             </section>
           </section>
         </div>
-
         <div className="right-section">
           <section style={{ textAlign: "left" }}>
-            <h3 style={{ fontWeight: "bold", width: "100%" }}>
-              MacBook Pro 2022 13 inch Apple M2 8GB RAM 256GB SSD – NEW
-            </h3>
-            <div className="price" style={{marginTop:"20px"}}>
-              <h5 style={{ color: "red",fontWeight:"bold" }}>29.000.000 đ</h5>
+            {productDetail?.map((product, index) => (
+              <div key={index}>
+                <h3 style={{ fontWeight: "bold", width: "100%" }}>
+                  {product.name}
+                </h3>
+              </div>
+            ))}
+            
+          <div   className="price" style={{ marginTop: "20px" }}>
+              {productDetail?.map((product, index) => (
+                <div key={index}>
+                  <h5 style={{ color: "red", fontWeight: "bold" }}>{product.price}VNĐ</h5>
+                </div>
+              ))}
+             
               <h7>
                 Trả góp từ{" "}
                 <span style={{ color: "green", fontWeight: "bold" }}>
@@ -237,25 +268,25 @@ const ProductDetail = () => {
           </section>
           {/*  */}
           <section style={{ textAlign: "left", marginTop: "10px", display: "flex", alignItems: "center" }}>
-  <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
-  <span>Sản phẩm chính hãng</span>
-</section>
-<section style={{ textAlign: "left", marginTop: "10px", display: "flex", alignItems: "center" }}>
-  <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
-  <span>Giá đã bao gồm VAT</span>
-</section>
-<section style={{ textAlign: "left", marginTop: "10px", display: "flex", alignItems: "center" }}>
-  <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
-  <span>Bảo hành 12 tháng</span>
-</section>
-<section style={{ textAlign: "left", marginTop: "10px", display: "flex", alignItems: "center" }}>
-  <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
-  <span>Giảm giá 10% khi mua phụ kiện kèm theo</span>
-</section>
+            <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
+            <span>Sản phẩm chính hãng</span>
+          </section>
+          <section style={{ textAlign: "left", marginTop: "10px", display: "flex", alignItems: "center" }}>
+            <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
+            <span>Giá đã bao gồm VAT</span>
+          </section>
+          <section style={{ textAlign: "left", marginTop: "10px", display: "flex", alignItems: "center" }}>
+            <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
+            <span>Bảo hành 12 tháng</span>
+          </section>
+          <section style={{ textAlign: "left", marginTop: "10px", display: "flex", alignItems: "center" }}>
+            <AiFillCheckCircle style={{ color: "green", marginRight: "5px" }} />
+            <span>Giảm giá 10% khi mua phụ kiện kèm theo</span>
+          </section>
           {/*  */}
           <section style={{ marginTop: "20px" }}>
             <div className="purchase-section">
-              <button className="buy-now-button">Mua Ngay</button>
+              <button className="buy-now-button">Mua Ngay</button> 
               <div className="additional-buttons">
                 <button className="additional-button">Thêm vào giỏ hàng</button>
                 <button className="additional-button">Mua trả góp</button>
@@ -264,25 +295,25 @@ const ProductDetail = () => {
           </section>
           {/*  */}
           <section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
-  <IoLaptopSharp style={{ marginRight: "5px" }} />
-  <span>Dùng thử 10 ngày miễn phí đổi máy. (Macbook Like New)</span>
-</section>
-<section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
-  <BiSolidErrorCircle style={{ marginRight: "5px" }} />
-  <span>Lỗi 1 Đổi 1 trong 30 ngày đầu. (Macbook Like New)</span>
-</section>
-<section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
-  <BsRocketTakeoffFill style={{ marginRight: "5px" }} />
-  <span>Giao hàng tận nhà toàn quốc</span>
-</section>
-<section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
-  <AiFillLike style={{ marginRight: "5px" }} />
-  <span>Thanh toán khi nhận hàng (nội thành)</span>
-</section>
-<section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
-  <BsFillTelephoneInboundFill style={{ marginRight: "5px" }} />
-  <span>Gọi 0936 096 900 để được tư vấn mua hàng (Miễn phí)</span>
-</section>
+            <IoLaptopSharp style={{ marginRight: "5px" }} />
+            <span>Dùng thử 10 ngày miễn phí đổi máy. (Macbook Like New)</span>
+          </section>
+          <section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
+            <BiSolidErrorCircle style={{ marginRight: "5px" }} />
+            <span>Lỗi 1 Đổi 1 trong 30 ngày đầu. (Macbook Like New)</span>
+          </section>
+          <section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
+            <BsRocketTakeoffFill style={{ marginRight: "5px" }} />
+            <span>Giao hàng tận nhà toàn quốc</span>
+          </section>
+          <section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
+            <AiFillLike style={{ marginRight: "5px" }} />
+            <span>Thanh toán khi nhận hàng (nội thành)</span>
+          </section>
+          <section style={{ textAlign: "left", marginTop: "7px", display: "flex", alignItems: "center" }}>
+            <BsFillTelephoneInboundFill style={{ marginRight: "5px" }} />
+            <span>Gọi 0936 096 900 để được tư vấn mua hàng (Miễn phí)</span>
+          </section>
 
           {/*  */}
           <section
@@ -537,19 +568,17 @@ const ProductDetail = () => {
             </div>
           </section>
         </div>
-      </div>
-      <section style={{paddingLeft:"80px",paddingRight:"80px"}}>
-  <h4 style={{fontWeight:"bold"}}>Apple ra MacBook Air Retina 2019 với màn hình công nghệ TrueTone</h4>
-  <p>Tối qua, theo giờ Việt Nam Apple vừa bất ngờ giới thiệu bản nâng cấp MacBook Air 2019 Retina mới. Theo đó MacBook Air 2019 sở hữu hữu màn hình Retina 13,3 inch độ phân giải 2560x1600 pixel được tích hợp công nghệ True Tone. Công nghệ này giúp tự động điều chỉnh cân bằng trắng của màn hình MacBook Air 2019 để phù hợp với nhiệt độ màu của ánh sáng xung quanh người dùng. Qua đó giúp những trải nghiệm về màu sắc trên màn hình của người dùng trở nên tự nhiên hơn.</p>
-  <img style={{  display: "block",
-    margin: "0 auto",
-    width: "50%"}} src="https://cdn.tgdd.vn/Files/2023/08/02/1540742/1-020823-124636.jpg" alt="MacBook Air 2019"/>
-  <p>Nâng cấp đáng chú ý tiếp theo của MacBook Air 2019 nằm ở con chip Intel thế hệ thứ 8 cho hiệu suất nhanh hơn. Cụ thể, MacBook Air 2019 được tích hợp bộ vi xử lý Intel Core i5 1.6GHz, chip đồ họa Intel UHD Graphics 617, RAM 8GB, ổ cứng SSD 128 GB (hỗ trợ tối đa 1.5 TB và nhanh hơn 60%).</p>
-</section>
-     
+       
+        </div>
+      < div > <CommentSection productId={productId} /></div>
       <Footer />
     </div>
-  );
+
+    
+   
+     
+  )
 };
 
 export default ProductDetail;
+

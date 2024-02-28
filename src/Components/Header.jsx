@@ -33,8 +33,13 @@ const Header = () => {
             <Nav.Link href="news">Tin tức</Nav.Link>
           </Nav>
           <Nav className="ml-auto">
-
-            {localStorage.getItem('userRole') == 1 ? (
+            <Nav.Link onClick={() => handleSignout()}  >
+              <FontAwesomeIcon icon={faSignInAlt} /> Đăng xuất
+            </Nav.Link>
+            <Nav.Link href="login" className="login">
+              <FontAwesomeIcon icon={faSignInAlt} /> Đăng Nhập
+            </Nav.Link>
+            {/* {localStorage.getItem('userRole') == 1 ? (
               <Nav.Link onClick={() => handleSignout()}  >
                 <FontAwesomeIcon icon={faSignInAlt} /> Đăng xuất
               </Nav.Link>
@@ -44,7 +49,7 @@ const Header = () => {
                 <FontAwesomeIcon icon={faSignInAlt} /> Đăng Nhập
               </Nav.Link>
 
-            )}
+            )} */}
             <Nav.Link href="purchase-history" className="register">
               <FontAwesomeIcon icon={faHistory} /> Lịch sử mua hàng
             </Nav.Link>

@@ -163,7 +163,12 @@
     display: block;
 }
 
-
+.card-sao{
+    color: #ffc107;
+    text-align: center;
+    font-size: 23px;
+    letter-spacing: 1px;
+}
 /* styles.css */
 
 
@@ -245,7 +250,7 @@
 
 .card-title {
     font-size: 1.5rem;
-    color: #343a40;
+    color: #151515;
     text-align: center;
     margin-bottom: 5px;
 }
@@ -433,9 +438,10 @@
 }
 
 .card-text {
-    color: #555;
+    color: #c81717;
     text-align: center;
     margin-bottom: 10px;
+    font-weight: bold;
     /* Adjusted bottom margin for the text */
 }
 
